@@ -194,7 +194,8 @@ class OAuthRemoteApp(object):
         self.access_token_method = access_token_method
         self._consumer = oauth2.Consumer(self.consumer_key,
                                          self.consumer_secret)
-        self._client = OAuthClient(self._consumer)
+        self._client = OAuthClient(self._consumer,
+            disable_ssl_certificate_validation=True)
 
     def status_okay(self, resp):
         """Given request data, checks if the status is okay."""
@@ -236,7 +237,7 @@ class OAuthRemoteApp(object):
         Usually you don't have to do that but use the :meth:`request`
         method instead.
         """
-        return oauth2.Client(self._consumer, self.get_request_token(token))
+        return oauth2.Client(self._consumer, self.get_request_token(token),disable_ssl_certificate_validation=True)
 
     def request(self, url, data="", headers=None, format='urlencoded',
                 method='GET', content_type=None, token=None):
